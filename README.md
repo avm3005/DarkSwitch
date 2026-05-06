@@ -1,46 +1,63 @@
-# detaroxzAutoDM
-Unlock true native-style auto dark mode on Windows with a blazing-light PowerShell engine—no background bloat, no unnecessary RAM usage, just pure intelligent theme switching.
+# 🌗 detaroxzAutoDM (Dynamic Theme Switcher for Windows 11)
 
-Unlike basic registry tweaks that leave your Taskbar and File Explorer stuck in a "zombie" state until you restart them, this script utilizes a C# system broadcast to instantly and seamlessly refresh your UI—mimicking the exact behavior of the native Windows Settings app.
+**AutoDM** is a lightweight, zero-bloat, fully automated Light/Dark mode switcher for Windows 11. Built entirely using native Windows tools, it seamlessly transitions your system and app themes based on your preferred schedule without leaving a footprint.
 
+Created by **[detaroxz](https://github.com/avm3005/)** • [knowaboutarchit.xo.je](https://knowaboutarchit.xo.je/)
+---
 
-## Features
+## ✨ Features
 
-- **All-in-One Installer:** A single script sets up the directory, generates the core files, and configures Windows Task Scheduler automatically.
-- **Seamless UI Refresh:** Transitions themes instantly without needing to restart `explorer.exe` or flash your screen.
-- **Interactive Settings Updater:** Easily change your scheduled times later without ever opening the clunky Task Scheduler interface.
-- **Clean Uninstaller:** Includes a self-destruct script to completely remove the scheduled tasks and files if you ever want to revert.
-- **Zero Background Footprint:** Uses standard Windows Task Scheduler to run the script for ~1 second twice a day. No background apps or memory hogs required.
+* **Flawless UI Sync:** Utilizes undocumented native Win32 APIs (`uxtheme.dll`) to instantly refresh File Explorer, Task Manager, and the Desktop Window Manager. No more "half-painted" windows or desynced title bars.
+* **100% CMD Polyglot Engine:** Written using an advanced hybrid Polyglot architecture. It looks and runs like a standard `.cmd` batch file but secretly executes high-powered PowerShell logic in memory—leaving zero `.ps1` files on your disk.
+* **Invisible Background Engine:** Relies on native Windows Scheduled Tasks and silent VBScript wrappers. It takes virtually 0% CPU/RAM and stays completely hidden from your Task Manager Startup tab.
+* **Native Integration:** Installs to `C:\Program Files\Detaroxz\AutoDM` and registers perfectly in your Windows **Settings > Apps > Installed apps** list with a clean uninstaller.
+* **Interactive CLI Dashboard:** A modern, ANSI-colored command-line dashboard allows you to change times, force-toggle themes, or manage startup triggers on the fly.
+* **Smart Time Detection:** Automatically adapts to your system's clock settings (12-hour AM/PM vs. 24-hour time).
+---
 
-## Installation
+## 🚀 Installation
 
-1. Download or copy the `setup.zip` file to your computer and extract it.
-2. Open the setup folder and **Right-click** `setup.bat` and select **Run as adminirstrator** (or run it from an elevated Administrator PowerShell terminal).
-3. When prompted, enter your desired times for Light and Dark mode (e.g., `7:00 AM` and `7:00 PM`) and select the Log-on settings as you like.
-4. The installer will create the necessary directory, generate the scripts, and configure the background tasks.
-5. You can safely delete the `setup.zip` file and the `setup` folder once setup is complete.
+Because AutoDM is a powerful system script, downloading it via a web browser may trigger a "Windows Smart App Control" warning due to the *Mark of the Web*. 
 
-## How It Works
+Choose one of the methods below to install safely:
 
-During setup, the installer creates a dedicated folder at `C:\Scripts\detaroxzautodarkmode` containing three perfectly packaged tools:
+### Method 1: The Terminal Fast-Track (Recommended)
+This method installs the tool directly via your terminal, bypassing the browser block completely.
+1. Open your Windows Start menu, type **`cmd`**, and select **Run as Administrator**.
+2. Paste the following command and press Enter:
+   ```cmd
+   git clone [https://github.com/avm3005/detaroxzAutoDM.git](https://github.com/avm3005/detaroxzAutoDM.git) && cd detaroxzAutoDM && Setup.cmd
+### Method 2: Manual Download
+If you prefer to download the .zip file manually:
 
-### 1. `Set-Theme.ps1` (The Engine)
-This is the core script triggered invisibly by Windows Task Scheduler. It modifies the `HKCU` Personalize registry keys and broadcasts a `WM_SETTINGCHANGE` message to force all open applications to immediately paint the new theme. 
+    Download the latest release .zip from this repository.
+    Extract the folder, right-click Setup.cmd, and select Run as Administrator.
 
-### 2. `Settings.ps1` (The Settings Editor)
-If you want to adjust your schedule (e.g., earlier dark mode in the winter), simply **Right-click -> Run with PowerShell** on this file. It will ask for your new times and seamlessly update Task Scheduler for you.
+---
 
-### 3. `Uninstall-AutoTheme.ps1` (The Cleaner)
-If you ever want to remove the program, **Right-click -> Run with PowerShell** on this file. It will safely unregister the background tasks from Windows and permanently delete the `C:\Scripts\detaroxzautodarkmode` folder, leaving zero trace on your system.
+## ⚙️ Usage
 
-## Troubleshooting
+Once installed, AutoDM runs entirely in the background. If you need to change your settings or force a theme toggle:
 
-- **Theme isn't changing?** Ensure that the tasks were created under your specific Windows User Account and that you are logged in at the time of the scheduled change. Task Scheduler isolates visual tasks to "Session 0" if set to run when the user is not logged in.
-- **Red error text during install?** Make sure you are running the installer as an Administrator, as creating Scheduled Tasks requires elevated privileges.
+    Open your Windows Start Menu.
+    Search for AutoDM Settings to open the interactive dashboard.
+    Search for Quick Mode Toggle to instantly flip your current theme without opening a menu.
 
+The Dashboard Features:
 
-Thanks for visiting this repo! I'm still learning:)
+    Change Times: Update your scheduled Light or Dark mode triggers.
+    Toggle Log-on Trigger: Ensure your PC wakes up in the correct theme if you log in after a scheduled switch.
+    Toggle Start Menu Visibility: Hide or show the AutoDM shortcuts in your Start Menu.
+    Developer Links: Quick access to support and updates.
+---
 
-I'm a student, if you want to help me in study then I think you know what to do, UPI: architm193@okicici
-IG: its_avm
-Reddit: its_avm_05
+## 🗑️ Uninstallation
+
+AutoDM cleans up after itself perfectly.
+
+    Open Windows Settings.
+    Go to Apps > Installed apps.
+    Search for AutoDM.
+    Click the three dots ... and select Uninstall.
+
+This will automatically unregister all scheduled tasks, delete the registry keys, remove the Start Menu shortcuts, and wipe the directory from Program Files.
