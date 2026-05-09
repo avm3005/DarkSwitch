@@ -20,19 +20,19 @@ Created by **[detaroxz](https://github.com/avm3005/)** • [knowaboutarchit.xo.j
 Because AutoDM is a powerful system script, downloading it via a web browser may trigger a "Windows Smart App Control" warning due to the *Mark of the Web*. 
 
 Choose one of the methods below to install safely:
-
-### Method 1: The Terminal Fast-Track (Recommended)
-This method installs the tool directly via your terminal, bypassing the browser block completely.
-1. Open your Windows Start menu, type **`cmd`**, and select **Run as Administrator**.
-2. Paste the following command and press Enter:
-   ```cmd
-   git clone [https://github.com/avm3005/detaroxzAutoDM.git](https://github.com/avm3005/detaroxzAutoDM.git) && cd detaroxzAutoDM && Setup.cmd
-### Method 2: Manual Download
+### Method 1: Manual Download (Recommended)
 If you prefer to download the .zip file manually:
 
     Download the latest release .zip from this repository.
     Extract the folder, right-click Setup.cmd, and select Run as Administrator.
 
+
+### Method 2: The Terminal Fast-Track 
+This method installs the tool directly via your terminal, bypassing the browser block completely.
+1. Open your Windows Start menu, type **`cmd`**, and select **Run as Administrator**.
+2. Paste the following command and press Enter:
+   ```cmd
+   git clone [https://github.com/avm3005/detaroxzAutoDM.git](https://github.com/avm3005/detaroxzAutoDM.git) && cd detaroxzAutoDM && Setup.cmd
 ---
 
 ## ⚙️ Usage
