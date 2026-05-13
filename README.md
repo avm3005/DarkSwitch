@@ -5,8 +5,8 @@
 Created by **[detaroxz](https://github.com/avm3005/)** • [knowaboutarchit.xo.je](https://knowaboutarchit.xo.je/)
 ---
 
-## ✨ Features
 
+## ✨ Features
 * **Flawless UI Sync:** Utilizes undocumented native Win32 APIs (`uxtheme.dll`) to instantly refresh File Explorer, Task Manager, and the Desktop Window Manager. No more "half-painted" windows or desynced title bars.
 * **100% CMD Polyglot Engine:** Written using an advanced hybrid Polyglot architecture. It looks and runs like a standard `.cmd` batch file but secretly executes high-powered PowerShell logic in memory—leaving zero `.ps1` files on your disk.
 * **Invisible Background Engine:** Relies on native Windows Scheduled Tasks and silent VBScript wrappers. It takes virtually 0% CPU/RAM and stays completely hidden from your Task Manager Startup tab.
@@ -14,6 +14,7 @@ Created by **[detaroxz](https://github.com/avm3005/)** • [knowaboutarchit.xo.j
 * **Interactive CLI Dashboard:** A modern, ANSI-colored command-line dashboard allows you to change times, force-toggle themes, or manage startup triggers on the fly.
 * **Smart Time Detection:** Automatically adapts to your system's clock settings (12-hour AM/PM vs. 24-hour time).
 ---
+
 
 ## 🚀 Installation
 Because AutoDM is a powerful system script, downloading it via a web browser may trigger a "Windows Smart App Control" warning due to the *Mark of the Web*. 
@@ -31,11 +32,11 @@ This method installs the tool directly via your terminal, bypassing the browser 
    git clone [https://github.com/avm3005/detaroxzAutoDM.git](https://github.com/avm3005/detaroxzAutoDM.git) && cd detaroxzAutoDM && Setup.cmd
 ---
 
+
 ## ⚙️ Usage
 Once installed, AutoDM runs entirely automaticly with the help of task scheduler. You can manage your settings using either the Command Line Interface or the standard Start Menu shortcuts.
 ### 🖥️ Command Line Interface (CLI)
 AutoDM automatically registers a global system command. Open any Command Prompt or Windows Terminal window and type:
-
     autodm -qt : Instantly toggles the current theme (Light/Dark).
     autodm -settings : Opens the AutoDM Settings Dashboard directly in your terminal.
     autodm -reset : Deletes and re-creates the Task Scheduler tasks back to default (07:00 / 19:00). Useful for troubleshooting.
@@ -53,6 +54,7 @@ AutoDM automatically registers a global system command. Open any Command Prompt 
     Developer Links: Quick access to support and updates.
 ---
 
+
 ## 🗑️ Uninstallation
 AutoDM cleans up after itself perfectly. This operation will automatically unregister all scheduled tasks, delete the registry keys, remove the Start Menu shortcuts, and wipe the directory from Program Files.
 ### Method 1: Command Line (Fastest)
@@ -65,7 +67,8 @@ AutoDM cleans up after itself perfectly. This operation will automatically unreg
     Click the three dots ... and select Uninstall.
 ---
 
+
 ## 📱Issues and suggestion
 If you want to raise a concern or suggest a feature, you know where to find me:)
-Insta: its_avm
-Reddit: its_avm_05
+    Insta: its_avm
+    Reddit: its_avm_05
