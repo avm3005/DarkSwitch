@@ -16,16 +16,12 @@ Created by **[detaroxz](https://github.com/avm3005/)** • [knowaboutarchit.xo.j
 ---
 
 ## 🚀 Installation
-
 Because AutoDM is a powerful system script, downloading it via a web browser may trigger a "Windows Smart App Control" warning due to the *Mark of the Web*. 
-
 Choose one of the methods below to install safely:
 ### Method 1: Manual Download (Recommended)
 If you prefer to download the .zip file manually:
-
     Download the latest release .zip from this repository.
     Extract the folder, right-click Setup.cmd, and select Run as Administrator.
-
 
 ### Method 2: The Terminal Fast-Track 
 This method installs the tool directly via your terminal, bypassing the browser block completely.
@@ -36,25 +32,32 @@ This method installs the tool directly via your terminal, bypassing the browser 
 ---
 
 ## ⚙️ Usage
-
-Once installed, AutoDM runs entirely in the background. If you need to change your settings or force a theme toggle:
-
-    Open your Windows Start Menu.
+Once installed, AutoDM runs entirely automaticly with the help of task scheduler. You can manage your settings using either the Command Line Interface or the standard Start Menu shortcuts.
+### 🖥️ Command Line Interface (CLI)
+AutoDM automatically registers a global system command. Open any Command Prompt or Windows Terminal window and type:
+    autodm -qt : Instantly toggles the current theme (Light/Dark).
+    autodm -settings : Opens the AutoDM Settings Dashboard directly in your terminal.
+    autodm -reset : Deletes and re-creates the Task Scheduler tasks back to default (07:00 / 19:00). Useful for troubleshooting.
+    autodm -uninstall : Instantly uninstalls AutoDM from your system.
+    autodm -help : Displays the CLI help menu.
+    
+### 🖱️ Start Menu Shortcuts
     Search for AutoDM Settings to open the interactive dashboard.
-    Search for Quick Mode Toggle to instantly flip your current theme without opening a menu.
-
-The Dashboard Features:
-
+    Search for Quick Toggle to instantly flip your current theme without opening a menu.
+    
+### The Dashboard Features:
     Change Times: Update your scheduled Light or Dark mode triggers.
     Toggle Log-on Trigger: Ensure your PC wakes up in the correct theme if you log in after a scheduled switch.
-    Toggle Start Menu Visibility: Hide or show the AutoDM shortcuts in your Start Menu.
+    Toggle Start Menu Items: Hide or show the AutoDM shortcuts in your Start Menu.
     Developer Links: Quick access to support and updates.
 ---
 
 ## 🗑️ Uninstallation
-AutoDM cleans up after itself perfectly.
-This operation will automatically unregister all scheduled tasks, delete the registry keys, remove the Start Menu shortcuts, and wipe the directory from Program Files.
+AutoDM cleans up after itself perfectly. This operation will automatically unregister all scheduled tasks, delete the registry keys, remove the Start Menu shortcuts, and wipe the directory from Program Files.
+### Method 1: Command Line (Fastest)
+    Open any terminal window and type autodm -uninstall.
 
+### Method 2: Windows settings    
     Open Windows Settings.
     Go to Apps > Installed apps.
     Search for AutoDM.
