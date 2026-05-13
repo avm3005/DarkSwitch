@@ -1,4 +1,5 @@
 # ◑ detaroxzAutoDM
+<img width="1920" height="1080" alt="Untitled" src="https://github.com/user-attachments/assets/548a903f-0778-403f-8d0d-8bcf625d4478" />
 
 **detaroxzAutoDM** (also known as AutoDM) is a lightweight, zero-bloat, fully automated Light/Dark mode switcher for Windows 11. Built entirely using native Windows tools, it seamlessly transitions your system and app themes based on your preferred schedule without leaving a footprint.
 
@@ -18,9 +19,9 @@ Created by **[detaroxz](https://github.com/avm3005/)** • [knowaboutarchit.xo.j
 
 ## 🚀 Installation
 Because AutoDM is a powerful system script, downloading it via a web browser may trigger a "Windows Smart App Control" warning due to the *Mark of the Web*. 
-    
-    Download the latest release .zip from this repository.
-    Extract the folder, right-click setup.cmd, and select Run as Administrator.
+  
+> Download the latest release [AutoDM.Setup.v1.2.2.zip](https://github.com/avm3005/detaroxzAutoDM/releases/tag/v1.2.2/) from this repository.    
+> Extract the folder, right-click setup.cmd, and select Run as Administrator.
 
 ---
 
