@@ -35,6 +35,7 @@ This method installs the tool directly via your terminal, bypassing the browser 
 Once installed, AutoDM runs entirely automaticly with the help of task scheduler. You can manage your settings using either the Command Line Interface or the standard Start Menu shortcuts.
 ### 🖥️ Command Line Interface (CLI)
 AutoDM automatically registers a global system command. Open any Command Prompt or Windows Terminal window and type:
+
     autodm -qt : Instantly toggles the current theme (Light/Dark).
     autodm -settings : Opens the AutoDM Settings Dashboard directly in your terminal.
     autodm -reset : Deletes and re-creates the Task Scheduler tasks back to default (07:00 / 19:00). Useful for troubleshooting.
