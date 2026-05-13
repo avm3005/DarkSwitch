@@ -52,12 +52,16 @@ The Dashboard Features:
 ---
 
 ## 🗑️ Uninstallation
-
 AutoDM cleans up after itself perfectly.
 
     Open Windows Settings.
     Go to Apps > Installed apps.
     Search for AutoDM.
     Click the three dots ... and select Uninstall.
-
 This will automatically unregister all scheduled tasks, delete the registry keys, remove the Start Menu shortcuts, and wipe the directory from Program Files.
+---
+
+## 📱Issues and suggestion
+If you want to raise a concern or suggest a feature, you know where to find me:)
+Insta: its_avm
+Reddit: its_avm_05
