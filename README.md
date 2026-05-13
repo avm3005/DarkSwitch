@@ -1,5 +1,5 @@
 # ◑ detaroxzAutoDM
-<img width="1920" height="1080" alt="Untitled" src="https://github.com/user-attachments/assets/548a903f-0778-403f-8d0d-8bcf625d4478" />
+<img width="1920" height="1080" alt="Untitled" src="https://github.com/user-attachments/assets/2fdecc28-ae94-43bf-bc17-cc836b8b6a0b" />
 
 **detaroxzAutoDM** (also known as AutoDM) is a lightweight, zero-bloat, fully automated Light/Dark mode switcher for Windows 11. Built entirely using native Windows tools, it seamlessly transitions your system and app themes based on your preferred schedule without leaving a footprint.
 
