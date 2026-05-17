@@ -1,3 +1,3 @@
 @echo off
-:: Silent Toggle
-wscript.exe "%~dp0Engine\RunSilent.vbs" "%~dp0Engine\ToggleTheme.cmd"
+:: Silent Toggle via Elevated Scheduled Task
+schtasks /run /tn "AutoDM - Quick Toggle" >nul 2>&1
