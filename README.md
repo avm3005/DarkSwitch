@@ -19,7 +19,7 @@
 
 ## 🚀 Installation
 
-Download the latest release [AutoDM.Setup.v1.3.1.zip](https://www.google.com/search?q=https://github.com/avm3005/detaroxzAutoDM/releases/tag/v1.3.1/) from this repository.
+Download the latest release [AutoDM.Setup.v1.3.1.zip](https://github.com/avm3005/detaroxzAutoDM/releases/tag/v1.3.1) from this repository.
 
 Extract the folder, right-click `setup.cmd`, and select **Run as Administrator**.
 
