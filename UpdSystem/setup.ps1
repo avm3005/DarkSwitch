@@ -1,42 +1,103 @@
 $ErrorActionPreference = "Stop"
+
+# Force TLS 1.2
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 Write-Host "Initializing AutoDM Cloud Engine..." -ForegroundColor Cyan
 
 try {
-    # 1. Fetch the latest version from the UpdSystem subfolder
+
+    # Fetch latest version
     $versionUrl = "https://raw.githubusercontent.com/avm3005/detaroxzAutoDM/main/UpdSystem/version.txt"
-    $version = (Invoke-RestMethod -Uri $versionUrl -UseBasicParsing).Trim() -replace '^v', ''
-    
-    # 2. Construct dynamic URLs
-    $zipName = "AutoDM.Setup.v${version}.zip"
-    $downloadUrl = "https://github.com/avm3005/detaroxzAutoDM/releases/tag/v1.3.1/AutoDM.Setup.v1.3.1.zip"
-    
-    # 3. Create secure temporary directory
+
+    $versionRaw = (Invoke-WebRequest -Uri $versionUrl -UseBasicParsing).Content.Trim()
+
+    # Remove leading v if present
+    $version = $versionRaw -replace '^v', ''
+
+    Write-Host "Detected Version: v$version" -ForegroundColor Green
+
+    # ZIP filename
+    $zipName = "AutoDM.Setup.v$version.zip"
+
+    # Release download URL
+    $downloadUrl = "https://github.com/avm3005/detaroxzAutoDM/releases/download/v$version/$zipName"
+
+    Write-Host "Download URL:" -ForegroundColor DarkGray
+    Write-Host $downloadUrl -ForegroundColor Yellow
+
+    # Temp directory
     $tempDir = Join-Path $env:TEMP "AutoDM_Install_$([guid]::NewGuid().ToString().Substring(0,8))"
+
     New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
+
     $zipPath = Join-Path $tempDir $zipName
-    
-    # 4. Download and Extract
-    Write-Host "Downloading AutoDM v${version}..." -ForegroundColor Yellow
-    Invoke-WebRequest -Uri $downloadUrl -OutFile $zipPath -UseBasicParsing
-    
-    Write-Host "Extracting archive..." -ForegroundColor Yellow
-    Expand-Archive -Path $zipPath -DestinationPath $tempDir -Force
-    
-    $setupCmd = Join-Path $tempDir "setup.cmd"
-    if (Test-Path $setupCmd) {
-        Write-Host "Launching Environment Setup..." -ForegroundColor Green
-        # 5. Launch setup.cmd elevated and wait for it to finish
-        $proc = Start-Process -FilePath "cmd.exe" -ArgumentList "/c `"$setupCmd`"" -Verb RunAs -PassThru -WindowStyle Normal
-        $proc.WaitForExit()
-    } else {
-        Write-Host "Error: setup.cmd not found in the downloaded archive." -ForegroundColor Red
+
+    # Download ZIP
+    Write-Host "Downloading AutoDM v$version..." -ForegroundColor Yellow
+
+    Invoke-WebRequest `
+        -Uri $downloadUrl `
+        -OutFile $zipPath `
+        -UseBasicParsing
+
+    # Validate download
+    if (!(Test-Path $zipPath)) {
+        throw "ZIP file was not downloaded."
     }
-    
-    # 6. Silent Cleanup
+
+    $fileSize = (Get-Item $zipPath).Length
+
+    Write-Host "Downloaded Size: $fileSize bytes" -ForegroundColor Cyan
+
+    if ($fileSize -lt 1000) {
+        throw "Downloaded file is too small and likely invalid."
+    }
+
+    # Extract archive
+    Write-Host "Extracting archive..." -ForegroundColor Yellow
+
+    Expand-Archive `
+        -Path $zipPath `
+        -DestinationPath $tempDir `
+        -Force
+
+    # Locate setup.cmd
+    $setupCmd = Join-Path $tempDir "setup.cmd"
+
+    if (Test-Path $setupCmd) {
+
+        Write-Host "Launching Environment Setup..." -ForegroundColor Green
+
+        $proc = Start-Process `
+            -FilePath "cmd.exe" `
+            -ArgumentList "/c `"$setupCmd`"" `
+            -Verb RunAs `
+            -PassThru `
+            -WindowStyle Normal
+
+        $proc.WaitForExit()
+
+    } else {
+
+        throw "setup.cmd not found in extracted files."
+    }
+
+    # Cleanup
     Write-Host "Cleaning up temporary files..." -ForegroundColor Cyan
-    Remove-Item -Path $tempDir -Recurse -Force -ErrorAction SilentlyContinue
+
+    Remove-Item `
+        -Path $tempDir `
+        -Recurse `
+        -Force `
+        -ErrorAction SilentlyContinue
+
     Write-Host "Done!" -ForegroundColor Green
 
-} catch {
-    Write-Host "A critical error occurred: $_" -ForegroundColor Red
+}
+catch {
+
+    Write-Host ""
+    Write-Host "A critical error occurred:" -ForegroundColor Red
+    Write-Host $_.Exception.Message -ForegroundColor Red
 }
