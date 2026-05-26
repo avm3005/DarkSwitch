@@ -9,6 +9,8 @@
 
 * **Light weight UI:** AutoDM has a very light user interface (`Dashboard`) and switching mechanism (`Quick Toggle`) 
 * **Global Keyboard Shortcut:** AutoDM also has a hotkey (default: `CTRL+ALT+T`) to instantly and silently toggle your theme from any app or screen.
+* **Mode switch:** AutoDM has a very sharp theme toggling that cycles between light mode and dark mode, it has two triggers - on your scheduled time and when windows logs on to ensure that you are on the correct theme no matter what.
+* **Quick toggle:** It is a function designed to switch your theme when you want, also it disables the log on trigger till the next scheduled trigger so that your theme stays the way you like it.
 * **Wallpaper switch:** AutoDM intigrates a wallpaper switching mechanism with the toggles so that you can enjoy different wallpaper with different modes just like _MAC OS_.
 * **Accent color switch:** AutoDM also intigrates an accent color switching mechanism with the quick toggle so that you can enjoy different accent colors during different times of day
 * **No Background resource consuming Engine:** Relies on native Windows Scheduled Tasks. It takes uses 0% CPU/RAM when idle so that your apps and games can work at maximum speed.
