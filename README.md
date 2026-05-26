@@ -7,18 +7,26 @@
 
 ## ✨ Features
 
-* **Flawless UI Sync:** Utilizes undocumented native Win32 APIs (`uxtheme.dll`) and aggressive indexer cache clearing to instantly refresh File Explorer, Task Manager, and the Start Menu. No more "half-painted" windows or desynced title bars.
-* **Global Keyboard Shortcut:** Bind a custom hotkey (default: `CTRL+ALT+T`) to instantly and silently toggle your theme from any app or screen.
-* **100% CMD Polyglot Engine:** Written using an advanced hybrid Polyglot architecture. It looks and runs like a standard `.cmd` batch file but secretly executes high-powered PowerShell logic in memory—leaving zero `.ps1` files on your disk.
-* **Invisible Background Engine:** Relies on native Windows Scheduled Tasks and silent VBScript wrappers. It takes virtually 0% CPU/RAM and stays completely hidden from your Task Manager Startup tab.
-* **Lightning-Fast Interactive Dashboard:** A modern, memory-cached CLI dashboard allows you to change times, force-toggle themes, or manage startup triggers on the fly, complete with a dynamic session log.
-* **Smart Update Engine:** Automatically detects older installations and seamlessly imports your previous schedules, triggers, and custom hotkeys without overwriting them.
-* **Native Integration:** Installs to machine-wide `ProgramData` and `Program Files` directories and registers perfectly in your Windows **Settings > Apps > Installed apps** list with a clean uninstaller.
+* **Light weight UI:** AutoDM has a very light user interface (`Dashboard`) and switching mechanism (`Quick Toggle`) 
+* **Global Keyboard Shortcut:** AutoDM also has a hotkey (default: `CTRL+ALT+T`) to instantly and silently toggle your theme from any app or screen.
+* **Wallpaper switch:** AutoDM intigrates a wallpaper switching mechanism with the toggles so that you can enjoy different wallpaper with different modes just like _MAC OS_.
+* **Accent color switch:** AutoDM also intigrates an accent color switching mechanism with the quick toggle so that you can enjoy different accent colors during different times of day
+* **No Background resource consuming Engine:** Relies on native Windows Scheduled Tasks. It takes uses 0% CPU/RAM when idle so that your apps and games can work at maximum speed.
+* **Lightning-Fast Interactive Dashboard:** A modern, memory-cached dashboard allows you to change times, force-toggle themes, or manage startup triggers on the fly, complete with a dynamic session log.
+* **Setting importing engine:** Automatically detects older installations and seamlessly imports your previous schedules, triggers, and custom hotkeys without overwriting them.
+* **Check for updates:** We add things which provide great value during each update, but comming to website every time just to check if a new version is released is not good, so therefore we have a `Check for updates` section in dashboard, which will only check the updates when you want it to. 
+* **Native Integration:** AutoDM has a cli interface that let's you use AutoDM without start menu shortcuts. Usefull for NERDS I guess!
 
 ---
 
 ## 🚀 Installation
+### Method 1: Command Line (Fastest)
+Open powershell as admin and paste the following command:
+```
+irm https://raw.githubusercontent.com/avm3005/detaroxzAutoDM/main/UpdSystem/setup.ps1 | iex
+```
 
+### Method 2: Manual installation
 Download the latest release [AutoDM.Setup.v1.3.1.zip](https://github.com/avm3005/detaroxzAutoDM/releases/tag/v1.3.1) from this repository.
 
 Extract the folder, right-click `setup.cmd`, and select **Run as Administrator**.
@@ -44,7 +52,7 @@ AutoDM automatically registers a global system command. Open any Command Prompt 
 
 ### 🖱️ Start Menu & Keyboard Shortcuts
 
-* **AutoDM Dashboard:** Search for this in the Start Menu to open the interactive settings menu.
+* **Dashboard:** Search for this in the Start Menu to open the interactive settings menu.
 * **Quick Toggle:** Search for this to instantly flip your current theme without opening a menu.
 * **Keyboard Shortcut:** Press `CTRL+ALT+T` (or your custom key) to toggle the theme silently.
 
@@ -53,8 +61,12 @@ AutoDM automatically registers a global system command. Open any Command Prompt 
 * **Change Times:** Update your scheduled Light or Dark mode triggers.
 * **Toggle Boot Trigger:** Ensures your PC instantly applies the correct theme upon Log-on or Workstation Unlock.
 * **Toggle Auto Switching:** Temporarily pause the daily automatic schedule.
+* **Toggle Wallpaper switch:** Turn on changing of wallpaper with this switch.
+* **Toggle Accent color switch:** Turn on changing of accent color with this switch.
 * **Toggle Start Menu Items:** Hide or show the AutoDM shortcuts in your Windows Start Menu.
 * **Toggle / Change Keyboard Shortcut:** Enable, disable, or assign a new letter/number to the `CTRL+ALT` toggle hotkey.
+* **Check for updates:** Download the newest version if you want
+
 
 ---
 
