@@ -8,7 +8,7 @@ try {
     
     # 2. Construct dynamic URLs
     $zipName = "AutoDM.Setup.v${version}.zip"
-    $downloadUrl = "https://github.com/avm3005/detaroxzAutoDM/releases/tag/v${version}/AutoDM.Setup.v1.3.1.zip"
+    $downloadUrl = "https://github.com/avm3005/detaroxzAutoDM/releases/tag/v1.3.1/AutoDM.Setup.v1.3.1.zip"
     
     # 3. Create secure temporary directory
     $tempDir = Join-Path $env:TEMP "AutoDM_Install_$([guid]::NewGuid().ToString().Substring(0,8))"
