@@ -1,3 +1,6 @@
+# AutoDM Final setup.ps1
+
+```powershell
 $ErrorActionPreference = "Stop"
 
 # Force TLS 1.2
@@ -12,7 +15,7 @@ try {
 
     $versionRaw = (Invoke-WebRequest -Uri $versionUrl -UseBasicParsing).Content.Trim()
 
-    # Remove leading v if present
+    # Remove leading 'v' if present
     $version = $versionRaw -replace '^v', ''
 
     Write-Host "Detected Version: v$version" -ForegroundColor Green
@@ -26,7 +29,7 @@ try {
     Write-Host "Download URL:" -ForegroundColor DarkGray
     Write-Host $downloadUrl -ForegroundColor Yellow
 
-    # Temp directory
+    # Create temporary directory
     $tempDir = Join-Path $env:TEMP "AutoDM_Install_$([guid]::NewGuid().ToString().Substring(0,8))"
 
     New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
@@ -36,10 +39,10 @@ try {
     # Download ZIP
     Write-Host "Downloading AutoDM v$version..." -ForegroundColor Yellow
 
-    Invoke-WebRequest `
-        -Uri $downloadUrl `
-        -OutFile $zipPath `
-        -UseBasicParsing
+    $webClient = New-Object System.Net.WebClient
+    $webClient.Headers.Add("User-Agent", "Mozilla/5.0")
+
+    $webClient.DownloadFile($downloadUrl, $zipPath)
 
     # Validate download
     if (!(Test-Path $zipPath)) {
@@ -52,6 +55,16 @@ try {
 
     if ($fileSize -lt 1000) {
         throw "Downloaded file is too small and likely invalid."
+    }
+
+    # Validate ZIP signature
+    $signature = Get-Content -Path $zipPath -Encoding Byte -TotalCount 4
+
+    if (
+        $signature[0] -ne 0x50 -or
+        $signature[1] -ne 0x4B
+    ) {
+        throw "Downloaded file is not a valid ZIP archive."
     }
 
     # Extract archive
@@ -101,3 +114,10 @@ catch {
     Write-Host "A critical error occurred:" -ForegroundColor Red
     Write-Host $_.Exception.Message -ForegroundColor Red
 }
+```
+
+## One-Line Installer
+
+```powershell
+irm https://raw.githubusercontent.com/avm3005/detaroxzAutoDM/main/UpdSystem/setup.ps1 | iex
+```
