@@ -1,6 +1,3 @@
-# AutoDM Final setup.ps1
-
-```powershell
 $ErrorActionPreference = "Stop"
 
 # Force TLS 1.2
@@ -70,10 +67,12 @@ try {
     # Extract archive
     Write-Host "Extracting archive..." -ForegroundColor Yellow
 
-    Expand-Archive `
-        -Path $zipPath `
-        -DestinationPath $tempDir `
-        -Force
+    # Use .NET extraction instead of Expand-Archive for better compatibility
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+
+    [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $tempDir)
+
+    Write-Host "Extraction completed successfully." -ForegroundColor Green
 
     # Locate setup.cmd
     $setupCmd = Join-Path $tempDir "setup.cmd"
@@ -114,10 +113,3 @@ catch {
     Write-Host "A critical error occurred:" -ForegroundColor Red
     Write-Host $_.Exception.Message -ForegroundColor Red
 }
-```
-
-## One-Line Installer
-
-```powershell
-irm https://raw.githubusercontent.com/avm3005/detaroxzAutoDM/main/UpdSystem/setup.ps1 | iex
-```
