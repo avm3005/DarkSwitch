@@ -29,7 +29,7 @@ irm https://raw.githubusercontent.com/avm3005/detaroxzAutoDM/main/UpdSystem/setu
 ```
 
 ### Method 2: Manual installation
-Download the latest release [AutoDM.Setup.v1.3.1.zip](https://github.com/avm3005/detaroxzAutoDM/releases/tag/v1.3.1) from this repository.
+Download the latest release [AutoDM.Setup.v1.3.2.zip](https://github.com/avm3005/detaroxzAutoDM/releases/tag/v1.3.2) from this repository.
 
 Extract the folder, right-click `setup.cmd`, and select **Run as Administrator**.
 
@@ -96,5 +96,5 @@ If you want to raise a concern or suggest a feature, you know where to find me:)
 * **Reddit:** `its_avm_05`
 
 ## 💵 Credits
-* **Main icon**:      Pie chart in a Icon by OCHA on <a href="https://icon-icons.com/authors/354-ocha">Icon-Icons.com</a>
-* **Settings icon**:  Cog gear machine office Icon by Settings cog options config Icon by Squarecup LTD on <a href="https://icon-icons.com/authors/817-squarecup-ltd">Icon-Icons.com</a>
+* **Main icon**:      Sites google window website Icon by Chameleon Design on <a href="https://icon-icons.com/authors/231-chameleon-design">Icon-Icons.com</a>
+* **Quick toggle icon**:  Energy power thunderbolt weather Icon by Yaicon on <a href="https://icon-icons.com/authors/1220-yaicon">Icon-Icons.com</a>
