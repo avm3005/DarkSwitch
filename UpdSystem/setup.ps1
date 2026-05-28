@@ -4,6 +4,7 @@ $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 Clear-Host
+
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "        AutoDM Cloud Installer          " -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
@@ -11,7 +12,7 @@ Write-Host ""
 
 try {
 
-    # Get latest version
+    # Version file
     $versionUrl = "https://raw.githubusercontent.com/avm3005/detaroxzAutoDM/main/UpdSystem/version.txt"
 
     Write-Host "Checking latest version..." -ForegroundColor Yellow
@@ -21,7 +22,7 @@ try {
 
     Write-Host "Latest Version: v$version" -ForegroundColor Green
 
-    # Build download URL
+    # Download URL
     $zipName = "AutoDM.Setup.v$version.zip"
 
     $downloadUrl = "https://github.com/avm3005/detaroxzAutoDM/releases/download/v$version/$zipName"
@@ -29,68 +30,58 @@ try {
     Write-Host ""
     Write-Host "Downloading package..." -ForegroundColor Yellow
 
-    # Create temp folder
+    # Temp folder
     $tempDir = Join-Path $env:TEMP ("AutoDM_" + [guid]::NewGuid().ToString())
 
     New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
 
     $zipPath = Join-Path $tempDir $zipName
 
-    # Download
-    Invoke-WebRequest `
-        -Uri $downloadUrl `
-        -OutFile $zipPath `
-        -UseBasicParsing
+    # Download ZIP
+    Invoke-WebRequest -Uri $downloadUrl -OutFile $zipPath -UseBasicParsing
 
-    # Verify
     if (!(Test-Path $zipPath)) {
         throw "Download failed."
     }
 
     Write-Host "Download complete." -ForegroundColor Green
 
-    # Extract
+    # Extract ZIP
     Write-Host ""
     Write-Host "Extracting files..." -ForegroundColor Yellow
 
-    Expand-Archive `
-        -Path $zipPath `
-        -DestinationPath $tempDir `
-        -Force
+    Expand-Archive -Path $zipPath -DestinationPath $tempDir -Force
 
     Write-Host "Extraction complete." -ForegroundColor Green
 
-    # Search setup.cmd recursively
-    $setupCmd = Get-ChildItem `
-        -Path $tempDir `
-        -Filter "setup.cmd" `
-        -Recurse `
-        -File | Select-Object -First 1
+    # Find setup.cmd
+    $setupCmd = Get-ChildItem -Path $tempDir -Filter "setup.cmd" -Recurse -File | Select-Object -First 1
 
     if (-not $setupCmd) {
-        throw "setup.cmd was not found after extraction."
+        throw "setup.cmd not found in extracted files."
     }
 
     Write-Host ""
-    Write-Host "Found installer:" -ForegroundColor Cyan
+    Write-Host "Found setup.cmd:" -ForegroundColor Cyan
     Write-Host $setupCmd.FullName -ForegroundColor White
 
     Write-Host ""
-    Write-Host "Launching AutoDM Installer..." -ForegroundColor Green
+    Write-Host "Launching installer..." -ForegroundColor Green
 
-    # Create launcher BAT file
+    # Create BAT launcher
     $launcherBat = Join-Path $tempDir "launch_installer.bat"
 
-    @"
+    $batContent = @"
 @echo off
 cd /d "%~dp0"
 call "$($setupCmd.FullName)"
 pause
-"@ | Set-Content -Path $launcherBat -Encoding ASCII
+"@
 
-    # Open using modern Windows Terminal
-    Start-Process `
-        -FilePath "wt.exe" `
+    Set-Content -Path $launcherBat -Value $batContent -Encoding ASCII
+
+    # Launch using Windows Terminal
+    Start-Process -FilePath "wt.exe" `
         -ArgumentList "cmd.exe /k `"$launcherBat`"" `
         -Verb RunAs
 
