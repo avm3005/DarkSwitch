@@ -81,12 +81,12 @@ try {
 
         Write-Host "Launching Environment Setup..." -ForegroundColor Green
 
+        # Launch in modern Windows 11 Terminal
         $proc = Start-Process `
-            -FilePath "cmd.exe" `
-            -ArgumentList "/c `"$setupCmd`"" `
+            -FilePath "wt.exe" `
+            -ArgumentList "cmd /k `"$setupCmd`"" `
             -Verb RunAs `
-            -PassThru `
-            -WindowStyle Normal
+            -PassThru
 
         $proc.WaitForExit()
 
