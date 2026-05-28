@@ -67,7 +67,6 @@ try {
     # Extract archive
     Write-Host "Extracting archive..." -ForegroundColor Yellow
 
-    # Use .NET extraction instead of Expand-Archive for better compatibility
     Add-Type -AssemblyName System.IO.Compression.FileSystem
 
     [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $tempDir)
@@ -82,29 +81,21 @@ try {
         Write-Host "Launching Environment Setup..." -ForegroundColor Green
 
         # Launch in modern Windows 11 Terminal
-        $proc = Start-Process `
+        Start-Process `
             -FilePath "wt.exe" `
-            -ArgumentList "cmd /k `"$setupCmd`"" `
-            -Verb RunAs `
-            -PassThru
-
-        $proc.WaitForExit()
+            -ArgumentList @(
+                "cmd.exe",
+                "/k",
+                "`"$setupCmd`""
+            ) `
+            -Verb RunAs
 
     } else {
 
         throw "setup.cmd not found in extracted files."
     }
 
-    # Cleanup
-    Write-Host "Cleaning up temporary files..." -ForegroundColor Cyan
-
-    Remove-Item `
-        -Path $tempDir `
-        -Recurse `
-        -Force `
-        -ErrorAction SilentlyContinue
-
-    Write-Host "Done!" -ForegroundColor Green
+    Write-Host "Installer launched successfully." -ForegroundColor Green
 
 }
 catch {
