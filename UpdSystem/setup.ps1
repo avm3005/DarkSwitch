@@ -1,31 +1,5 @@
 $ErrorActionPreference = "Stop"
 
-# Force TLS 1.2
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
-Write-Host "Initializing AutoDM Cloud Engine..." -ForegroundColor Cyan
-
-try {
-
-    # Fetch latest version
-    $versionUrl = "https://raw.githubusercontent.com/avm3005/detaroxzAutoDM/main/UpdSystem/version.txt"
-
-    $versionRaw = (Invoke-WebRequest -Uri $versionUrl -UseBasicParsing).Content.Trim()
-
-    # Remove leading 'v' if present
-    $version = $versionRaw -replace '^v', ''
-
-    Write-Host "Detected Version: v$version" -ForegroundColor Green
-
-    # ZIP filename
-    $zipName = "AutoDM.Setup.v$version.zip"
-
-    # Release download URL
-    $downloadUrl = "https://github.com/avm3005/detaroxzAutoDM/releases/download/v$version/$zipName"
-
-    Write-Host "Download URL:" -ForegroundColor DarkGray
-    Write-Host $downloadUrl -ForegroundColor Yellow
-
     # Create temporary directory
     $tempDir = Join-Path $env:TEMP "AutoDM_Install_$([guid]::NewGuid().ToString().Substring(0,8))"
 
@@ -73,21 +47,20 @@ try {
 
     Write-Host "Extraction completed successfully." -ForegroundColor Green
 
-    # Locate setup.cmd
-    $setupCmd = Join-Path $tempDir "setup.cmd"
+    # Locate setup.cmd recursively
+    $setupCmd = Get-ChildItem -Path $tempDir -Filter "setup.cmd" -Recurse | Select-Object -First 1
 
-    if (Test-Path $setupCmd) {
+    if ($setupCmd) {
 
         Write-Host "Launching Environment Setup..." -ForegroundColor Green
+        Write-Host "Found setup.cmd at:" -ForegroundColor Cyan
+        Write-Host $setupCmd.FullName -ForegroundColor Yellow
 
-        # Launch in modern Windows 11 Terminal
+        # Use cmd.exe start command through Windows Terminal
+        # This fully fixes path parsing issues
         Start-Process `
             -FilePath "wt.exe" `
-            -ArgumentList @(
-                "cmd.exe",
-                "/k",
-                "`"$setupCmd`""
-            ) `
+            -ArgumentList "cmd.exe /k cd /d `"$($setupCmd.DirectoryName)`" && call `"$($setupCmd.FullName)`"" `
             -Verb RunAs
 
     } else {
