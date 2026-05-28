@@ -3,81 +3,107 @@ $ErrorActionPreference = "Stop"
 # Force TLS 1.2
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-Write-Host "Initializing AutoDM Cloud Engine..." -ForegroundColor Cyan
+Clear-Host
+Write-Host "========================================" -ForegroundColor Cyan
+Write-Host "        AutoDM Cloud Installer          " -ForegroundColor Cyan
+Write-Host "========================================" -ForegroundColor Cyan
+Write-Host ""
 
 try {
 
-    # Fetch latest version
+    # Get latest version
     $versionUrl = "https://raw.githubusercontent.com/avm3005/detaroxzAutoDM/main/UpdSystem/version.txt"
 
-    $versionRaw = (Invoke-WebRequest -Uri $versionUrl -UseBasicParsing).Content.Trim()
+    Write-Host "Checking latest version..." -ForegroundColor Yellow
 
-    # Remove leading 'v' if present
+    $versionRaw = (Invoke-WebRequest -Uri $versionUrl -UseBasicParsing).Content.Trim()
     $version = $versionRaw -replace '^v', ''
 
-    Write-Host "Detected Version: v$version" -ForegroundColor Green
+    Write-Host "Latest Version: v$version" -ForegroundColor Green
 
-    # ZIP filename
+    # Build download URL
     $zipName = "AutoDM.Setup.v$version.zip"
 
-    # Release download URL
     $downloadUrl = "https://github.com/avm3005/detaroxzAutoDM/releases/download/v$version/$zipName"
 
-    Write-Host "Download URL:" -ForegroundColor DarkGray
-    Write-Host $downloadUrl -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "Downloading package..." -ForegroundColor Yellow
 
-    # Create temporary directory
-    $tempDir = Join-Path $env:TEMP "AutoDM_Install_$([guid]::NewGuid().ToString().Substring(0,8))"
+    # Create temp folder
+    $tempDir = Join-Path $env:TEMP ("AutoDM_" + [guid]::NewGuid().ToString())
 
     New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
 
     $zipPath = Join-Path $tempDir $zipName
 
-    # Download ZIP
-    Write-Host "Downloading AutoDM v$version..." -ForegroundColor Yellow
+    # Download
+    Invoke-WebRequest `
+        -Uri $downloadUrl `
+        -OutFile $zipPath `
+        -UseBasicParsing
 
-    $webClient = New-Object System.Net.WebClient
-    $webClient.Headers.Add("User-Agent", "Mozilla/5.0")
-
-    $webClient.DownloadFile($downloadUrl, $zipPath)
-
-    # Validate download
+    # Verify
     if (!(Test-Path $zipPath)) {
-        throw "ZIP file was not downloaded."
+        throw "Download failed."
     }
 
-    $fileSize = (Get-Item $zipPath).Length
+    Write-Host "Download complete." -ForegroundColor Green
 
-    Write-Host "Downloaded Size: $fileSize bytes" -ForegroundColor Cyan
+    # Extract
+    Write-Host ""
+    Write-Host "Extracting files..." -ForegroundColor Yellow
 
-    if ($fileSize -lt 1000) {
-        throw "Downloaded file is too small and likely invalid."
+    Expand-Archive `
+        -Path $zipPath `
+        -DestinationPath $tempDir `
+        -Force
+
+    Write-Host "Extraction complete." -ForegroundColor Green
+
+    # Search setup.cmd recursively
+    $setupCmd = Get-ChildItem `
+        -Path $tempDir `
+        -Filter "setup.cmd" `
+        -Recurse `
+        -File | Select-Object -First 1
+
+    if (-not $setupCmd) {
+        throw "setup.cmd was not found after extraction."
     }
 
-    # Validate ZIP signature
-    $signature = Get-Content -Path $zipPath -Encoding Byte -TotalCount 4
+    Write-Host ""
+    Write-Host "Found installer:" -ForegroundColor Cyan
+    Write-Host $setupCmd.FullName -ForegroundColor White
 
-    if (
-        $signature[0] -ne 0x50 -or
-        $signature[1] -ne 0x4B
-    ) {
-        throw "Downloaded file is not a valid ZIP archive."
-    }
+    Write-Host ""
+    Write-Host "Launching AutoDM Installer..." -ForegroundColor Green
 
-    # Extract archive
-    Write-Host "Extracting archive..." -ForegroundColor Yellow
+    # Create launcher BAT file
+    $launcherBat = Join-Path $tempDir "launch_installer.bat"
 
-    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    @"
+@echo off
+cd /d "%~dp0"
+call "$($setupCmd.FullName)"
+pause
+"@ | Set-Content -Path $launcherBat -Encoding ASCII
 
-    [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $tempDir)
+    # Open using modern Windows Terminal
+    Start-Process `
+        -FilePath "wt.exe" `
+        -ArgumentList "cmd.exe /k `"$launcherBat`"" `
+        -Verb RunAs
 
-    Write-Host "Extraction completed successfully." -ForegroundColor Green
+    Write-Host ""
+    Write-Host "Installer started successfully." -ForegroundColor Green
 
-    # Locate setup.cmd recursively
-    $setupCmd = Get-ChildItem -Path $tempDir -Filter "setup.cmd" -Recurse | Select-Object -First 1
+}
+catch {
 
-    if ($setupCmd) {
-
-        Write-Host "Launching Environment Setup..." -ForegroundColor Green
-        Write-Host "Found setup.cmd at:" -ForegroundColor Cyan
+    Write-Host ""
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host "              INSTALL ERROR             " -ForegroundColor Red
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host $_.Exception.Message -ForegroundColor Red
+    Write-Host ""
 }
