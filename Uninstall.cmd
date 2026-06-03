@@ -1,9 +1,10 @@
 # 2>NUL & @cls & @echo off
 # 2>NUL & set "SELF_PATH=%~f0"
 # 2>NUL & set "MODE_FLAG=%~1"
+# 2>NUL & set "C=iex (Get-Content -LiteralPath '%~f0' -Raw)"
 # 2>NUL & net session >nul 2>&1 || (powershell -NoProfile -WindowStyle Hidden -Command "Start-Process cmd -ArgumentList '/c \"\"%SELF_PATH%\"\" %MODE_FLAG%' -Verb RunAs" & exit /b)
-# 2>NUL & if not defined WT_SESSION (wt powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-Command -ScriptBlock ([Scriptblock]::Create([System.IO.File]::ReadAllText($env:SELF_PATH)))" & exit /b)
-# 2>NUL & powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-Command -ScriptBlock ([Scriptblock]::Create([System.IO.File]::ReadAllText($env:SELF_PATH)))"
+# 2>NUL & if not defined WT_SESSION (where wt >nul 2>&1 && (wt powershell -NoProfile -ExecutionPolicy Bypass -Command "%C%" 2>nul & exit /b))
+# 2>NUL & powershell -NoProfile -ExecutionPolicy Bypass -Command "%C%"
 # 2>NUL & exit /b
 
 $isUpgrade = ($env:MODE_FLAG -eq 'UPGRADE')
