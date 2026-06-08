@@ -10,13 +10,40 @@ Write-Host "        AutoDM Cloud Installer          " -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
+# Helper function to handle transient network errors (like 504 Gateway Timeout)
+function Invoke-WebRequestWithRetry {
+    param(
+        [string]$Uri,
+        [string]$OutFile,
+        [int]$MaxRetries = 3
+    )
+    $retryCount = 0
+    while ($true) {
+        try {
+            if ([string]::IsNullOrEmpty($OutFile)) {
+                return Invoke-WebRequest -Uri $Uri -UseBasicParsing
+            } else {
+                Invoke-WebRequest -Uri $Uri -OutFile $OutFile -UseBasicParsing
+                return
+            }
+        } catch {
+            $retryCount++
+            if ($retryCount -ge $MaxRetries) {
+                throw "Request failed after $MaxRetries attempts: $($_.Exception.Message)"
+            }
+            Write-Host "Network error ($($_.Exception.Message)). Retrying in 3 seconds... ($retryCount/$MaxRetries)" -ForegroundColor DarkYellow
+            Start-Sleep -Seconds 3
+        }
+    }
+}
+
 try {
     # Version file
     $versionUrl = "https://raw.githubusercontent.com/avm3005/detaroxzAutoDM/main/UpdSystem/version.txt"
 
     Write-Host "Checking latest version..." -ForegroundColor Yellow
 
-    $versionRaw = (Invoke-WebRequest -Uri $versionUrl -UseBasicParsing).Content.Trim()
+    $versionRaw = (Invoke-WebRequestWithRetry -Uri $versionUrl).Content.Trim()
     $version = $versionRaw -replace '^v', ''
 
     Write-Host "Latest Version: v$version" -ForegroundColor Green
@@ -35,7 +62,7 @@ try {
     $zipPath = Join-Path $tempDir $zipName
 
     # Download ZIP
-    Invoke-WebRequest -Uri $downloadUrl -OutFile $zipPath -UseBasicParsing
+    Invoke-WebRequestWithRetry -Uri $downloadUrl -OutFile $zipPath
 
     if (!(Test-Path $zipPath)) {
         throw "Download failed."
