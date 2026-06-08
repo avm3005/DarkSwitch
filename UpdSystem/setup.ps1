@@ -11,7 +11,6 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
 try {
-
     # Version file
     $versionUrl = "https://raw.githubusercontent.com/avm3005/detaroxzAutoDM/main/UpdSystem/version.txt"
 
@@ -24,7 +23,6 @@ try {
 
     # Download URL
     $zipName = "AutoDM.Setup.v$version.zip"
-
     $downloadUrl = "https://github.com/avm3005/detaroxzAutoDM/releases/download/v$version/$zipName"
 
     Write-Host ""
@@ -32,7 +30,6 @@ try {
 
     # Temp folder
     $tempDir = Join-Path $env:TEMP ("AutoDM_" + [guid]::NewGuid().ToString())
-
     New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
 
     $zipPath = Join-Path $tempDir $zipName
@@ -77,23 +74,22 @@ cd /d "%~dp0"
 call "$($setupCmd.FullName)"
 pause
 "@
-
     Set-Content -Path $launcherBat -Value $batContent -Encoding ASCII
 
-    # Launch using Windows Terminal
-    Start-Process -FilePath "wt.exe" `
-        -ArgumentList "cmd.exe /k `"$launcherBat`"" `
-        -Verb RunAs
+    # Launch using Windows Terminal if available, otherwise fallback to CMD to prevent crashes
+    if (Get-Command "wt.exe" -ErrorAction SilentlyContinue) {
+        Start-Process -FilePath "wt.exe" -ArgumentList "cmd.exe /k `"$launcherBat`"" -Verb RunAs
+    } else {
+        Start-Process -FilePath "cmd.exe" -ArgumentList "/k `"$launcherBat`"" -Verb RunAs
+    }
 
     Write-Host ""
     Write-Host "Installer started successfully." -ForegroundColor Green
 
-}
-catch {
-
+} catch {
     Write-Host ""
     Write-Host "========================================" -ForegroundColor Red
-    Write-Host "              INSTALL ERROR             " -ForegroundColor Red
+    Write-Host "             INSTALL ERROR              " -ForegroundColor Red
     Write-Host "========================================" -ForegroundColor Red
     Write-Host $_.Exception.Message -ForegroundColor Red
     Write-Host ""
