@@ -29,7 +29,7 @@ irm https://raw.githubusercontent.com/avm3005/detaroxzAutoDM/main/UpdSystem/setu
 ```
 
 ### Method 2: Manual installation
-Download the latest release [AutoDM.Setup.v1.3.2.zip](https://github.com/avm3005/detaroxzAutoDM/releases/tag/v1.3.2) from this repository.
+Download the latest release [AutoDM.Setup.v1.4.2.zip](https://github.com/avm3005/detaroxzAutoDM/releases/tag/v1.4.2) from this repository.
 
 Extract the folder, right-click `setup.cmd`, and select **Run as Administrator**.
 
