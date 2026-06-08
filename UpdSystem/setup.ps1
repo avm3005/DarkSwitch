@@ -15,15 +15,19 @@ function Invoke-WebRequestWithRetry {
     param(
         [string]$Uri,
         [string]$OutFile,
-        [int]$MaxRetries = 3
+        [int]$MaxRetries = 5
     )
     $retryCount = 0
     while ($true) {
         try {
             if ([string]::IsNullOrEmpty($OutFile)) {
-                return Invoke-WebRequest -Uri $Uri -UseBasicParsing
+                return Invoke-WebRequest -Uri $Uri -UseBasicParsing -ErrorAction Stop
             } else {
-                Invoke-WebRequest -Uri $Uri -OutFile $OutFile -UseBasicParsing
+                # Critical Fix: The PowerShell progress bar slows down the network stream on large files, 
+                # often causing GitHub's CDN to close the connection with a 504 Timeout. We must disable it during download.
+                $global:ProgressPreference = 'SilentlyContinue'
+                Invoke-WebRequest -Uri $Uri -OutFile $OutFile -UseBasicParsing -ErrorAction Stop
+                $global:ProgressPreference = 'Continue'
                 return
             }
         } catch {
@@ -32,14 +36,20 @@ function Invoke-WebRequestWithRetry {
                 throw "Request failed after $MaxRetries attempts: $($_.Exception.Message)"
             }
             Write-Host "Network error ($($_.Exception.Message)). Retrying in 3 seconds... ($retryCount/$MaxRetries)" -ForegroundColor DarkYellow
+            
+            # Clean up corrupted 0-byte file if download failed mid-way
+            if (-not [string]::IsNullOrEmpty($OutFile) -and (Test-Path $OutFile)) {
+                Remove-Item $OutFile -Force -ErrorAction SilentlyContinue
+            }
             Start-Sleep -Seconds 3
         }
     }
 }
 
 try {
-    # Version file
-    $versionUrl = "https://raw.githubusercontent.com/avm3005/detaroxzAutoDM/main/UpdSystem/version.txt"
+    # Version file with cache-buster to prevent stuck 504s on GitHub's CDN
+    $cacheBuster = [guid]::NewGuid().ToString()
+    $versionUrl = "https://raw.githubusercontent.com/avm3005/detaroxzAutoDM/main/UpdSystem/version.txt?t=$cacheBuster"
 
     Write-Host "Checking latest version..." -ForegroundColor Yellow
 
