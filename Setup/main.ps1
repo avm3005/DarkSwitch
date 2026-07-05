@@ -66,7 +66,7 @@ if (-not (Test-Path $vbsDll)) {
 # [TAMPER VERIFIER - DO NOT MODIFY THESE STRINGS OR THE SETUP WILL CRASH]
 $devName = "detaroxz"
 $devLink = "https://github.com/avm3005/"
-$projectLink = "https://github.com/avm3005/detaroxzDarkSwitch"
+$projectLink = "https://github.com/avm3005/DarkSwitch"
 $devWebsite = "https://avm3005.github.io/portfolio/"
 $moreProjectsLink = "https://github.com/avm3005?tab=repositories"
 $appVersion = "1.5.1"
@@ -2926,13 +2926,13 @@ try {
                         Hide-Loading
                         Write-Host "`n   `$cDim> Checking GitHub for updates...`$cReset"
                         try {
-                            `$remoteVer = (Invoke-RestMethod -Uri "https://raw.githubusercontent.com/avm3005/detaroxzDarkSwitch/main/UpdSystem/version.txt" -UseBasicParsing).Trim() -replace '^v', ''
+                            `$remoteVer = (Invoke-RestMethod -Uri "https://raw.githubusercontent.com/avm3005/DarkSwitch/main/Setup/version.txt" -UseBasicParsing).Trim() -replace '^v', ''
                             if ([version]`$remoteVer -gt [version]"`$appVersion") {
                                 `$ans = Show-InputScreen -Title "Update Available" -PromptStr "Do you want to download and apply this update now?" -CurrentValue "v$appVersion" -DefaultValue "N" -Format "Y/N" -Description "Fetch the latest features from GitHub." -HelpText @(" `$cGreen[!] A new update is available: v`$remoteVer`$cReset")
                                 if (`$ans -eq 'ESC_CANCEL') { Add-Log "Update cancelled."; `$needsRefresh = `$true; break }
                                 if (`$ans -match '^[Yy]') {
                                     Write-Host "`n   `$cAccent Confirming download... Launching Update Engine.`$cReset"
-                                    `$updateCmd = "irm https://raw.githubusercontent.com/avm3005/detaroxzDarkSwitch/main/UpdSystem/setup.ps1 | iex"
+                                    `$updateCmd = "irm https://raw.githubusercontent.com/avm3005/DarkSwitch/main/Setup/main.ps1 | iex"
                                     Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command `"`$updateCmd`""
                                     exit
                                 } else {
