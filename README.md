@@ -22,14 +22,14 @@
 ---
 
 ## 🚀 Installation
-### Method 1: Command Line (Fastest)
+### Method 1: Command Line (Fastest) **Does not work currently because of an issue - will fix in the next update**
 Open powershell as admin and paste the following command:
 ```
 irm https://raw.githubusercontent.com/avm3005/DarkSwitch/main/Setup/main.ps1 | iex
 ```
 
 ### Method 2: Manual installation
-Download the latest release [DarkSwitch.Setup.v1.4.2.zip](https://github.com/avm3005/DarkSwitch/releases/tag/v1.5.1) from this repository.
+Download the latest release [DarkSwitch.Setup.v1.5.1.zip](https://github.com/avm3005/DarkSwitch/releases/tag/v1.5.1) from this repository.
 
 Extract the folder, right-click `setup.vbs`, and select **Run as Administrator**.
 
