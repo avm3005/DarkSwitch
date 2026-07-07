@@ -1,7 +1,7 @@
 # DarkSwitch
 <img width="1920" height="1080" alt="Screenshot (69)" src="https://github.com/user-attachments/assets/9d886585-d65b-4835-b159-d1bcc4756e61" />
 
-**DarkSwitch** (also known as DarkSwitch) is a lightweight, zero-bloat, fully automated Light/Dark mode switcher for Windows 11. Built entirely using native Windows tools, it seamlessly transitions your system and app themes based on your preferred schedule without leaving a footprint.
+**DarkSwitch** (also known as AutoDM) is a lightweight, zero-bloat, fully automated Light/Dark mode switcher for Windows 11. Built entirely using native Windows tools, it seamlessly transitions your system and app themes based on your preferred schedule without leaving a footprint.
 
 ## Created by **[detaroxz](https://github.com/avm3005/)** • [Visit website](https://avm3005.github.io/portfolio/)
 
