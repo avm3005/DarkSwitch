@@ -13,7 +13,7 @@
 * **Quick toggle:** It is a function designed to switch your theme when you want, also it disables the log on trigger till the next scheduled trigger so that your theme stays the way you like it.
 * **Wallpaper switch:** DarkSwitch intigrates a wallpaper switching mechanism with the toggles so that you can enjoy different wallpaper with different modes just like _MAC OS_.
 * **Accent color switch:** DarkSwitch also intigrates an accent color switching mechanism with the quick toggle so that you can enjoy different accent colors during different times of day
-* * **Cursor scheme switch:** DarkSwitch also intigrates a cursor scheme switching mechanism with the quick toggle so that you can enjoy different cursors during different times of day
+* **Cursor scheme switch:** DarkSwitch also intigrates a cursor scheme switching mechanism with the quick toggle so that you can enjoy different cursors during different times of day
 * **No Background resource consuming Engine:** Relies on native Windows Scheduled Tasks. It takes uses 0% CPU/RAM when idle so that your apps and games can work at maximum speed.
 * **Lightning-Fast Interactive Dashboard:** A modern, memory-cached dashboard allows you to change times, force-toggle themes, or manage startup triggers on the fly, complete with a dynamic session log.
 * **Setting importing engine:** Automatically detects older installations and seamlessly imports your previous schedules, triggers, and custom hotkeys without overwriting them.
